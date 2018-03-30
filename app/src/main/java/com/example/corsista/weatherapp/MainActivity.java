@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         list.add("Roma");
         list.add("Milano");
         list.add("Scampia");
+        list.add("Firenze");
+        list.add("Dubai");
         recyclerView= findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);

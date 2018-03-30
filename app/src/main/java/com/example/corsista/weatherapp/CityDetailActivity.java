@@ -20,19 +20,29 @@ public class CityDetailActivity extends AppCompatActivity {
         String url = "http://api.openweathermap.org/data/2.5/weather";
         String città=dati.getString("città");
         String appId="2439d518e81cee90fd7a61cfe1109dd4";
-        ImageView imageView= findViewById(R.id.cityImage);
-        imageView.setImageResource(R.drawable.ic_city);
-        TextView textView= findViewById(R.id.cityName);
+        final ImageView imageView= findViewById(R.id.imageTempo);
+        final Bundle weatherimagesBundle = new Bundle();
+        weatherimagesBundle.putInt("Rain",R.drawable.rain_cloud_icon);
+        weatherimagesBundle.putInt("Clear",R.drawable.sun);
+        weatherimagesBundle.putInt("Clouds",R.drawable.cloud_forecast);
+        weatherimagesBundle.putInt("Fog",R.drawable.fog_mist);
+        TextView textView= findViewById(R.id.cityname);
         textView.setText(città);
-        final TextView textView2= findViewById(R.id.temperatura);
-        final TextView textView3= findViewById(R.id.tempo);
+        final TextView tempo= findViewById(R.id.tempo);
+        final TextView ora= findViewById(R.id.ora);
+        ora.setText("15:55");
+        final TextView data= findViewById(R.id.data);
+        data.setText("Oggi");
+        final TextView maxemin =findViewById(R.id.maxemin);
+
         GsonRequest gsonObjectReq = new GsonRequest(url+"?"+"q="+città+"&units=metric"+"&appid="+appId, CityWeather.class, null,
                 new Response.Listener<CityWeather>() {
                     @Override
                     public void onResponse(CityWeather response) {
                         cityWeather=response;
-                        textView2.setText((String.valueOf(cityWeather.getMain().getTemp())));
-                        textView3.setText(cityWeather.getWeather()[0].getMain());
+                        tempo.setText(cityWeather.getWeather()[0].getMain());
+                        imageView.setImageResource(weatherimagesBundle.getInt(cityWeather.getWeather()[0].getMain()));
+                        maxemin.setText(cityWeather.getMain().getTemp_max()+"/"+cityWeather.getMain().getTemp_min());
                     }
 
                 }, new Response.ErrorListener() {
