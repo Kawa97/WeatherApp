@@ -24,15 +24,15 @@ public class CityDetailActivity extends AppCompatActivity {
         imageView.setImageResource(R.drawable.ic_city);
         TextView textView= findViewById(R.id.cityName);
         textView.setText(città);
-        final TextView textView2= findViewById(R.id.exampleText);
+        final TextView textView2= findViewById(R.id.temperatura);
+        final TextView textView3= findViewById(R.id.tempo);
         GsonRequest gsonObjectReq = new GsonRequest(url+"?"+"q="+città+"&units=metric"+"&appid="+appId, CityWeather.class, null,
                 new Response.Listener<CityWeather>() {
                     @Override
                     public void onResponse(CityWeather response) {
                         cityWeather=response;
                         textView2.setText((String.valueOf(cityWeather.getMain().getTemp())));
-                        Toast toast= Toast.makeText(getApplicationContext(),cityWeather.toString(),Toast.LENGTH_LONG);
-                        toast.show();
+                        textView3.setText(cityWeather.getWeather()[0].getMain());
                     }
 
                 }, new Response.ErrorListener() {

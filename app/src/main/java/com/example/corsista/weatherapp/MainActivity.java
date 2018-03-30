@@ -35,31 +35,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerAdapter=new RecyclerAdapter(list,new RecyclerAdapter.OnItemClickListener() {
             @Override public void onItemClick(String item) {
-                Toast.makeText(getApplicationContext(), item, Toast.LENGTH_LONG).show();
                 Intent intent= new Intent(getApplicationContext(),CityDetailActivity.class);
                 intent.putExtra("città",item);
                 startActivity(intent);
             }
         });
         recyclerView.setAdapter(recyclerAdapter);
-
-        String url = "http://api.openweathermap.org/data/2.5/weather";
-        String città="Roma";
-        String appId="2439d518e81cee90fd7a61cfe1109dd4";
-        JsonObjectRequest jsonObjectReq = new JsonObjectRequest(url+"?"+"q="+città+"&appid="+appId, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Toast toast = Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                        Toast toast = Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG);
-                        toast.show();
-            }
-        });
-        ServiceQueueSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectReq);
     }
 }
